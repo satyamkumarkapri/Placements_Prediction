@@ -1,10 +1,92 @@
 {% extends "base.html" %}
 
-{% block title %}Feature Engineering{% endblock %}
+{% block title %}Feature Engineering | Placement Analytics{% endblock %}
+{% block page_title %}Feature Engineering & Model Pipeline{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h2>Feature Engineering</h2>
-    <p>Feature Engineering steps will be displayed here.</p>
+<div class="card fade-in delay-1" style="margin-bottom: 40px;">
+    <h2><i class="fa-solid fa-cogs" style="color: var(--primary-solid); margin-right: 12px;"></i> The Machine Learning Pipeline</h2>
+    <p class="lead-text">The backbone of our prediction system relies on rigorous data preprocessing and robust ensemble models. Below is the breakdown of how we transformed the raw dataset into predictive power.</p>
+
+    <div class="feature-grid" style="margin-top: 30px;">
+        <!-- Preprocessing Steps -->
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-filter" style="color: #10b981;"></i> Data Preprocessing</h4>
+            <ul>
+                <li><strong>Missing Value Imputation:</strong> Used <code>SimpleImputer(strategy='median')</code> to fill missing continuous values without skewing the distribution.</li>
+                <li><strong>Feature Scaling:</strong> Applied <code>StandardScaler</code> to numerical features (CGPA, CodingScore) to ensure uniformity.</li>
+                <li><strong>Categorical Encoding:</strong> Deployed <code>OneHotEncoder</code> to convert CollegeTier and Specialisation into binary matrices.</li>
+            </ul>
+        </div>
+
+        <!-- Model Architecture -->
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-network-wired" style="color: #f59e0b;"></i> Model Architecture</h4>
+            <ul>
+                <li><strong>Algorithm:</strong> Scikit-Learn <code>RandomForestClassifier</code> for Placement Status (Binary Classification).</li>
+                <li><strong>Regression Layer:</strong> Scikit-Learn <code>RandomForestRegressor</code> for Salary Estimation (Continuous Regression).</li>
+                <li><strong>Hyperparameters:</strong> Ensembled 100 Decision Trees (<code>n_estimators=100</code>) to prevent overfitting and capture non-linear relationships.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card fade-in delay-2">
+    <h2><i class="fa-solid fa-star" style="color: #ec4899; margin-right: 12px;"></i> Feature Importance Analysis</h2>
+    <p class="lead-text">Based on the trained Random Forest Gini Impurity reduction, the model identified the following features as the strongest predictors for successful placements:</p>
+    
+    <div style="background: #ffffff; border: 1px solid var(--card-border); border-radius: var(--radius-md); padding: 35px; box-shadow: var(--shadow-sm);">
+        
+        <div class="progress-group">
+            <div class="progress-header">
+                <span>CGPA (Academic Foundation)</span>
+                <span>32%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 32%; background: var(--primary-gradient);"></div>
+            </div>
+        </div>
+
+        <div class="progress-group">
+            <div class="progress-header">
+                <span>Coding Test Score (Technical Skill)</span>
+                <span>28%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 28%; background: var(--secondary-gradient); animation-delay: 0.2s;"></div>
+            </div>
+        </div>
+
+        <div class="progress-group">
+            <div class="progress-header">
+                <span>Mock Interview Score (Soft Skills)</span>
+                <span>20%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 20%; background: var(--success-gradient); animation-delay: 0.4s;"></div>
+            </div>
+        </div>
+
+        <div class="progress-group">
+            <div class="progress-header">
+                <span>Internships Completed (Experience)</span>
+                <span>12%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 12%; background: var(--danger-gradient); animation-delay: 0.6s;"></div>
+            </div>
+        </div>
+        
+        <div class="progress-group" style="margin-bottom: 0;">
+            <div class="progress-header">
+                <span>College Tier & Specialisation</span>
+                <span>8%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" style="width: 8%; background: #94a3b8; animation-delay: 0.8s;"></div>
+            </div>
+        </div>
+        
+    </div>
 </div>
 {% endblock %}

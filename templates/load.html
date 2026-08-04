@@ -3,44 +3,63 @@
 {% block page_title %}Dataset Overview{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h2><i class="fa-solid fa-database" style="color: #4f46e5; margin-right: 12px;"></i> Data Source Preview</h2>
-    <p style="color: var(--text-light); margin-bottom: 25px;">Below is a preview of the dataset currently loaded into the machine learning pipeline (first 10 records shown). This gives us a raw look at the student characteristics and placement statuses before any feature engineering is applied.</p>
+<div class="card fade-in delay-1">
+    <h2><i class="fa-solid fa-database" style="color: var(--primary-solid); margin-right: 12px;"></i> Data Source Preview</h2>
+    <p class="lead-text">Below is a preview of the dataset currently loaded into the machine learning pipeline. This gives us a raw look at the student characteristics and placement statuses before any feature engineering is applied.</p>
     
-    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
-        <div style="background: #e0e7ff; color: #4338ca; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-list-ol"></i> Total Rows: {{ "{:,}".format(rows) }}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+        <div style="display: flex; gap: 15px;">
+            <div style="background: var(--primary-light); color: var(--primary-solid); padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 10px; border: 1px solid rgba(79, 70, 229, 0.2);">
+                <i class="fa-solid fa-list-ol"></i> Total Rows: {{ "{:,}".format(rows) }}
+            </div>
+            <div style="background: #dcfce7; color: #15803d; padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 10px; border: 1px solid #bbf7d0;">
+                <i class="fa-solid fa-columns"></i> Total Columns: {{ cols }}
+            </div>
         </div>
-        <div style="background: #dcfce7; color: #15803d; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-columns"></i> Total Columns: {{ cols }}
+        
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <label style="font-size: 14px; font-weight: 800; color: var(--text-primary);"><i class="fa-solid fa-eye" style="margin-right: 5px; color: var(--text-light);"></i> Show Rows:</label>
+            <select class="form-control" style="width: auto; padding: 10px 16px; font-size: 14px; cursor: pointer; min-width: 130px; box-shadow: none;" onchange="window.location.href='/load?limit=' + this.value">
+                <option value="10" {% if limit == 10 %}selected{% endif %}>10</option>
+                <option value="50" {% if limit == 50 %}selected{% endif %}>50</option>
+                <option value="100" {% if limit == 100 %}selected{% endif %}>100</option>
+                <option value="500" {% if limit == 500 %}selected{% endif %}>500</option>
+                <option value="1000" {% if limit == 1000 %}selected{% endif %}>1,000</option>
+                <option value="5000" {% if limit == 5000 %}selected{% endif %}>5,000</option>
+                <option value="10000" {% if limit == 10000 %}selected{% endif %}>10,000</option>
+                <option value="20000" {% if limit == 20000 %}selected{% endif %}>20,000</option>
+                <option value="30000" {% if limit == 30000 %}selected{% endif %}>30,000</option>
+                <option value="40000" {% if limit == 40000 %}selected{% endif %}>40,000</option>
+                <option value="50000" {% if limit == 50000 %}selected{% endif %}>50,000</option>
+            </select>
         </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-container" style="max-height: 60vh; overflow-y: auto;">
         {{ table_html | safe }}
     </div>
 </div>
 
-<div class="card" style="margin-top: 30px;">
+<div class="card fade-in delay-2" style="margin-bottom: 20px;">
     <h2><i class="fa-solid fa-book" style="color: #ec4899; margin-right: 12px;"></i> Data Dictionary</h2>
-    <p style="color: var(--text-light); margin-bottom: 20px;">A detailed breakdown of the critical columns in our placement dataset and their relevance to the predictive model.</p>
+    <p class="lead-text">A detailed breakdown of the critical columns in our placement dataset and their relevance to the predictive model.</p>
     
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
-            <h4 style="color: #fff; margin: 0 0 5px 0;">CGPA & SGPA</h4>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Cumulative and Semester-wise Grade Point Averages. High academic consistency is strongly correlated with placement probability.</p>
+    <div class="feature-grid" style="margin-top: 0;">
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-graduation-cap" style="color: #3b82f6;"></i> CGPA & SGPA</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0; line-height: 1.6;">Cumulative and Semester-wise Grade Point Averages. High academic consistency is strongly correlated with placement probability.</p>
         </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
-            <h4 style="color: #fff; margin: 0 0 5px 0;">Internships & Projects</h4>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Quantifies practical experience. Usually, 2+ internships significantly boost expected Salary Package (LPA).</p>
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-briefcase" style="color: #10b981;"></i> Internships & Projects</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0; line-height: 1.6;">Quantifies practical experience. Usually, 2+ internships significantly boost expected Salary Package (LPA) in the regression model.</p>
         </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
-            <h4 style="color: #fff; margin: 0 0 5px 0;">CodingTest & MockInterview</h4>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Direct skill assessment metrics out of 100. Core drivers for the Random Forest classification model.</p>
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-laptop-code" style="color: #f59e0b;"></i> CodingTest & MockInterview</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0; line-height: 1.6;">Direct skill assessment metrics out of 100. Core drivers for the Random Forest classification model determining hireability.</p>
         </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
-            <h4 style="color: #fff; margin: 0 0 5px 0;">PlacementStatus (Target)</h4>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">The primary binary target variable (0 = Not Placed, 1 = Placed) for our supervised learning algorithms.</p>
+        <div class="feature-box">
+            <h4><i class="fa-solid fa-bullseye" style="color: #ef4444;"></i> PlacementStatus (Target)</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0; line-height: 1.6;">The primary binary target variable (0 = Not Placed, 1 = Placed) for our supervised learning algorithms.</p>
         </div>
     </div>
 </div>

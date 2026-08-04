@@ -1,62 +1,90 @@
-EDA SUMMARY REPORT
-============================================================
++------------------------------------------------------------------------------+
+|                         ADVANCED EDA SUMMARY REPORT                          |
++------------------------------------------------------------------------------+
 
-Shape
-(50000, 32)
+[1] DATASET OVERVIEW
+-------------------------
+> Total Rows       : 50,000
+> Total Features   : 32
+> <class 'pandas.DataFrame'>
+RangeIndex: 50000 entries, 0 to 49999
+Data columns (total 32 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   StudentID           50000 non-null  int64  
+ 1   Gender              50000 non-null  str    
+ 2   City                50000 non-null  str    
+ 3   CollegeTier         50000 non-null  str    
+ 4   Stream              50000 non-null  str    
+ 5   Specialisation      50000 non-null  str    
+ 6   Hostel              50000 non-null  str    
+ 7   HistoryOfBacklogs   50000 non-null  str    
+ 8   SGPA_Sem1           50000 non-null  float64
+ 9   SGPA_Sem2           50000 non-null  float64
+ 10  SGPA_Sem3           50000 non-null  float64
+ 11  SGPA_Sem4           50000 non-null  float64
+ 12  SGPA_Sem5           50000 non-null  float64
+ 13  SGPA_Sem6           50000 non-null  float64
+ 14  SGPA_Sem7           50000 non-null  float64
+ 15  SGPA_Sem8           50000 non-null  float64
+ 16  CGPA                50000 non-null  float64
+ 17  AttendancePercent   50000 non-null  float64
+ 18  Internships         50000 non-null  int64  
+ 19  Projects            50000 non-null  int64  
+ 20  Workshops           45512 non-null  float64
+ 21  Certifications      50000 non-null  int64  
+ 22  Publications        50000 non-null  int64  
+ 23  AptitudeTestScore   45971 non-null  float64
+ 24  SoftSkillsRating    46474 non-null  float64
+ 25  CodingTestScore     47024 non-null  float64
+ 26  MockInterviewScore  45043 non-null  float64
+ 27  ExtraCurricular     50000 non-null  int64  
+ 28  CGPA_Tier           50000 non-null  str    
+ 29  PlacementStatus     50000 non-null  int64  
+ 30  IsAnomaly           50000 non-null  int64  
+ 31  Salary Package      50000 non-null  float64
+dtypes: float64(16), int64(8), str(8)
+memory usage: 12.2 MB
+> Numeric Columns  : 24
+> Categorical Cols : 8
 
-Columns
-['StudentID', 'Gender', 'City', 'CollegeTier', 'Stream', 'Specialisation', 'Hostel', 'HistoryOfBacklogs', 'SGPA_Sem1', 'SGPA_Sem2', 'SGPA_Sem3', 'SGPA_Sem4', 'SGPA_Sem5', 'SGPA_Sem6', 'SGPA_Sem7', 'SGPA_Sem8', 'CGPA', 'AttendancePercent', 'Internships', 'Projects', 'Workshops', 'Certifications', 'Publications', 'AptitudeTestScore', 'SoftSkillsRating', 'CodingTestScore', 'MockInterviewScore', 'ExtraCurricular', 'CGPA_Tier', 'PlacementStatus', 'IsAnomaly', 'Salary Package']
+[2] MISSING VALUES ANALYSIS
+------------------------------
+  - MockInterviewScore   :  4957 missing ( 9.91%)
+  - Workshops            :  4488 missing ( 8.98%)
+  - AptitudeTestScore    :  4029 missing ( 8.06%)
+  - SoftSkillsRating     :  3526 missing ( 7.05%)
+  - CodingTestScore      :  2976 missing ( 5.95%)
 
-Missing Values
-StudentID                0
-Gender                   0
-City                     0
-CollegeTier              0
-Stream                   0
-Specialisation           0
-Hostel                   0
-HistoryOfBacklogs        0
-SGPA_Sem1                0
-SGPA_Sem2                0
-SGPA_Sem3                0
-SGPA_Sem4                0
-SGPA_Sem5                0
-SGPA_Sem6                0
-SGPA_Sem7                0
-SGPA_Sem8                0
-CGPA                     0
-AttendancePercent        0
-Internships              0
-Projects                 0
-Workshops             4488
-Certifications           0
-Publications             0
-AptitudeTestScore     4029
-SoftSkillsRating      3526
-CodingTestScore       2976
-MockInterviewScore    4957
-ExtraCurricular          0
-CGPA_Tier                0
-PlacementStatus          0
-IsAnomaly                0
-Salary Package           0
-dtype: int64
+[3] DATA QUALITY
+--------------------
+> Duplicate Rows   : 0
 
-Duplicate Rows
-0
+[4] TARGET VARIABLE (PlacementStatus)
+----------------------------------------
+  - Placed       : 32,856 (65.71%)
+  - Not Placed   : 17,144 (34.29%)
 
-Statistics
-           StudentID Gender  ...     IsAnomaly Salary Package
-count   50000.000000  50000  ...  50000.000000   50000.000000
-unique           NaN      2  ...           NaN            NaN
-top              NaN   Male  ...           NaN            NaN
-freq             NaN  30133  ...           NaN            NaN
-mean    25000.500000    NaN  ...      0.035000       9.536119
-std     14433.901067    NaN  ...      0.183782       8.824561
-min         1.000000    NaN  ...      0.000000       0.000000
-25%     12500.750000    NaN  ...      0.000000       0.000000
-50%     25000.500000    NaN  ...      0.000000       8.430000
-75%     37500.250000    NaN  ...      0.000000      18.410000
-max     50000.000000    NaN  ...      1.000000      26.000000
+[5] KEY NUMERICAL STATISTICS
+------------------------------
+                         mean        std   min    50%    max
+CGPA                 7.246154   1.615686   4.0   7.25   10.0
+CodingTestScore     57.411273  20.979679   0.0  57.70  100.0
+MockInterviewScore  55.408530  17.522180  15.9  54.70  100.0
+Salary Package       9.536119   8.824561   0.0   8.43   26.0
 
-[11 rows x 32 columns]
+[6] CORRELATION HIGHLIGHTS (vs PlacementStatus)
+--------------------------------------------------
+Top 3 Positive Correlations:
+  + Salary Package       : 0.774
+  + SGPA_Sem8            : 0.707
+  + SGPA_Sem7            : 0.702
+
+Top 3 Negative/Weakest Correlations:
+  - ExtraCurricular      : 0.240
+  - IsAnomaly            : 0.000
+  - StudentID            : -0.001
+
++------------------------------------------------------------------------------+
+|                                END OF REPORT                                 |
++------------------------------------------------------------------------------+

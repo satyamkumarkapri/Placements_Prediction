@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Load Data | Placement Analytics{% endblock %}
+{% block page_title %}Dataset Overview{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2><i class="fa-solid fa-database" style="color: #4f46e5; margin-right: 12px;"></i> Data Source Preview</h2>
+    <p style="color: var(--text-light); margin-bottom: 25px;">Below is a preview of the dataset currently loaded into the machine learning pipeline (first 10 records shown). This gives us a raw look at the student characteristics and placement statuses before any feature engineering is applied.</p>
+    
+    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+        <div style="background: #e0e7ff; color: #4338ca; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-list-ol"></i> Total Rows: {{ "{:,}".format(rows) }}
+        </div>
+        <div style="background: #dcfce7; color: #15803d; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-columns"></i> Total Columns: {{ cols }}
+        </div>
+    </div>
+
+    <div class="table-container">
+        {{ table_html | safe }}
+    </div>
+</div>
+
+<div class="card" style="margin-top: 30px;">
+    <h2><i class="fa-solid fa-book" style="color: #ec4899; margin-right: 12px;"></i> Data Dictionary</h2>
+    <p style="color: var(--text-light); margin-bottom: 20px;">A detailed breakdown of the critical columns in our placement dataset and their relevance to the predictive model.</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
+            <h4 style="color: #fff; margin: 0 0 5px 0;">CGPA & SGPA</h4>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Cumulative and Semester-wise Grade Point Averages. High academic consistency is strongly correlated with placement probability.</p>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
+            <h4 style="color: #fff; margin: 0 0 5px 0;">Internships & Projects</h4>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Quantifies practical experience. Usually, 2+ internships significantly boost expected Salary Package (LPA).</p>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
+            <h4 style="color: #fff; margin: 0 0 5px 0;">CodingTest & MockInterview</h4>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Direct skill assessment metrics out of 100. Core drivers for the Random Forest classification model.</p>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid var(--card-border);">
+            <h4 style="color: #fff; margin: 0 0 5px 0;">PlacementStatus (Target)</h4>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">The primary binary target variable (0 = Not Placed, 1 = Placed) for our supervised learning algorithms.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

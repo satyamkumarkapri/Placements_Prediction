@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}EDA | Placement Analytics{% endblock %}
+{% block page_title %}Exploratory Data Analysis{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2><i class="fa-solid fa-magnifying-glass-chart" style="color: #4f46e5; margin-right: 12px;"></i> Data Characteristics</h2>
+    <p>Dive deep into the dataset to uncover patterns, missing values, anomalies, and structural insights crucial for building the placement prediction model.</p>
+</div>
+
+<div class="card">
+    <h2><i class="fa-solid fa-terminal" style="color: #10b981; margin-right: 12px;"></i> Statistical Summary Report</h2>
+    <pre>{{ report }}</pre>
+</div>
+
+<div class="card">
+    <h2><i class="fa-solid fa-chart-pie" style="color: #ec4899; margin-right: 12px;"></i> Visualizations</h2>
+    <div class="graph-grid">
+        {% for plot in plots %}
+        <div class="graph-item">
+            <h4>{{ plot.replace('.png', '') }}</h4>
+            <img src="{{ url_for('serve_plot', filename=plot) }}" alt="{{ plot }}">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

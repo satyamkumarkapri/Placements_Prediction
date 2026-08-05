@@ -241,6 +241,13 @@
         })
         .then(response => response.json())
         .then(resData => {
+            if (resData.error) {
+                document.getElementById('result-status').innerText = "Error";
+                document.getElementById('result-message').innerText = resData.error;
+                document.getElementById('confidence-score').innerText = '...';
+                return;
+            }
+            
             resultBox.style.background = resData.bg;
             resultBox.style.borderColor = resData.color;
             

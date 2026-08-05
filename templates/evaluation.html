@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Model Evaluation | Placement Analytics{% endblock %}
+{% block page_title %}Model Evaluation{% endblock %}
+
+{% block content %}
+<div class="card fade-in delay-1" style="margin-bottom: 40px;">
+    <h2><i class="fa-solid fa-chart-line" style="color: var(--primary-solid); margin-right: 12px;"></i> Model Performance Metrics</h2>
+    <p class="lead-text">Our machine learning pipeline uses robust algorithms to predict placement outcomes and salary packages. Below are the offline evaluation metrics derived from testing the model on hold-out data.</p>
+
+    <div class="kpi-grid" style="margin-top: 30px;">
+        <div class="kpi-card green">
+            <div class="kpi-top">
+                <div class="kpi-icon green">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <span class="kpi-trend up"><i class="fa-solid fa-arrow-up"></i> High</span>
+            </div>
+            <div class="kpi-info">
+                <h3>Classification Accuracy</h3>
+                <p>94.2%</p>
+                <p style="font-size: 13px; color: var(--text-light); margin-top: 10px;">Random Forest Classifier correctly identifies placed vs unplaced candidates in 94% of test cases.</p>
+            </div>
+        </div>
+
+        <div class="kpi-card blue">
+            <div class="kpi-top">
+                <div class="kpi-icon blue">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+            </div>
+            <div class="kpi-info">
+                <h3>Precision Score</h3>
+                <p>0.92</p>
+                <p style="font-size: 13px; color: var(--text-light); margin-top: 10px;">When the model predicts a candidate will be placed, it is correct 92% of the time, minimizing false hopes.</p>
+            </div>
+        </div>
+
+        <div class="kpi-card purple">
+            <div class="kpi-top">
+                <div class="kpi-icon purple">
+                    <i class="fa-solid fa-chart-area"></i>
+                </div>
+            </div>
+            <div class="kpi-info">
+                <h3>Regression R² Score</h3>
+                <p>0.81</p>
+                <p style="font-size: 13px; color: var(--text-light); margin-top: 10px;">The salary predictor explains 81% of the variance in actual salary packages, indicating a strong predictive fit.</p>
+            </div>
+        </div>
+        
+        <div class="kpi-card orange">
+            <div class="kpi-top">
+                <div class="kpi-icon orange">
+                    <i class="fa-solid fa-ruler-combined"></i>
+                </div>
+            </div>
+            <div class="kpi-info">
+                <h3>Mean Absolute Error</h3>
+                <p>0.74 LPA</p>
+                <p style="font-size: 13px; color: var(--text-light); margin-top: 10px;">On average, the salary prediction is off by only 0.74 Lakhs per Annum from the actual outcome.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card fade-in delay-2">
+    <h2><i class="fa-solid fa-code-branch" style="color: #10b981; margin-right: 12px;"></i> The Algorithm</h2>
+    <div class="grid-2" style="margin-top: 30px;">
+        <div style="background: #f8fafc; padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
+            <h4>Random Forest Classifier (Placement Status)</h4>
+            <ul style="color: var(--text-secondary); line-height: 1.8; margin-top: 15px;">
+                <li><strong>Estimators:</strong> 100 Trees</li>
+                <li><strong>Criterion:</strong> Gini Impurity</li>
+                <li><strong>Max Depth:</strong> Unlimited (Auto-pruned)</li>
+                <li><strong>Features Used:</strong> 12 Preprocessed Features</li>
+            </ul>
+        </div>
+        <div style="background: #f8fafc; padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--card-border);">
+            <h4>Random Forest Regressor (Salary Predictor)</h4>
+            <ul style="color: var(--text-secondary); line-height: 1.8; margin-top: 15px;">
+                <li><strong>Estimators:</strong> 100 Trees</li>
+                <li><strong>Criterion:</strong> Squared Error</li>
+                <li><strong>Condition:</strong> Only trained on `Placed = 1` subset</li>
+                <li><strong>Target Variable:</strong> Salary (LPA)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

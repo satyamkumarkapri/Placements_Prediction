@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-from flask import Flask, render_template, send_from_directory, request, jsonify
-import random
+from flask import Flask, render_template, send_from_directory, request, jsonify, make_response
+import io
 
 import joblib
 
@@ -118,5 +118,54 @@ def predict_page():
             
     return render_template('predict.html')
 
+@app.route('/evaluation')
+def evaluation_page():
+    return render_template('evaluation.html')
+
+@app.route('/batch_predict', methods=['GET', 'POST'])
+def batch_predict_page():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return render_template('batch_predict.html', error='No file part')
+        
+        file = request.files['file']
+        if file.filename == '':
+            return render_template('batch_predict.html', error='No selected file')
+            
+        if file and file.filename.endswith('.csv'):
+            try:
+                # Read uploaded CSV
+                df = pd.read_csv(file)
+                
+                # Check if models are loaded
+                if not clf_pipeline or not reg_pipeline:
+                    return render_template('batch_predict.html', error='Machine Learning models are not loaded.')
+                
+                # Run predictions
+                # Make sure the dataframe matches expected columns or handle gracefully
+                # We assume the uploaded CSV has the correct feature names
+                df['Predicted_Placement'] = clf_pipeline.predict(df)
+                
+                # Predict salary only for those predicted as placed (1)
+                salaries = reg_pipeline.predict(df)
+                df['Predicted_Salary_LPA'] = [round(sal, 2) if p == 1 else 0.0 for sal, p in zip(salaries, df['Predicted_Placement'])]
+                
+                # Map 1/0 to Placed/Not Placed
+                df['Predicted_Placement'] = df['Predicted_Placement'].map({1: 'Placed', 0: 'Not Placed'})
+                
+                # Generate CSV to download
+                csv_buffer = io.StringIO()
+                df.to_csv(csv_buffer, index=False)
+                response = make_response(csv_buffer.getvalue())
+                response.headers["Content-Disposition"] = "attachment; filename=Batch_Predictions_Result.csv"
+                response.headers["Content-type"] = "text/csv"
+                return response
+            except Exception as e:
+                return render_template('batch_predict.html', error=f"Error processing file: {str(e)}")
+        else:
+            return render_template('batch_predict.html', error='Invalid file format. Please upload a CSV.')
+            
+    return render_template('batch_predict.html')
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)

@@ -36,9 +36,17 @@
                     <i class="fa-solid fa-laptop-code"></i>
                     <span>Feature Engg</span>
                 </a>
+                <a href="{{ url_for('evaluation_page') }}" class="nav-item {% if request.endpoint == 'evaluation_page' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Model Evaluation</span>
+                </a>
                 <a href="{{ url_for('predict_page') }}" class="nav-item {% if request.endpoint == 'predict_page' %}active{% endif %}">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <span style="color: var(--primary-solid); font-weight: 700;">Predict Placement</span>
+                </a>
+                <a href="{{ url_for('batch_predict_page') }}" class="nav-item {% if request.endpoint == 'batch_predict_page' %}active{% endif %}">
+                    <i class="fa-solid fa-users"></i>
+                    <span style="color: var(--text-primary); font-weight: 700;">Batch Prediction</span>
                 </a>
             </nav>
             

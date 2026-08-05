@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Prediction | Placement Analytics{% endblock %}
+{% block page_title %}Batch Prediction Tool{% endblock %}
+
+{% block content %}
+<div class="card fade-in delay-1" style="max-width: 800px; margin: 0 auto;">
+    <h2 style="text-align: center;"><i class="fa-solid fa-file-csv" style="color: #6366f1; margin-right: 12px;"></i> Upload CSV for Batch Processing</h2>
+    <p class="lead-text" style="text-align: center; margin-bottom: 30px;">
+        Have a list of students? Upload a CSV file containing their academic and skill profiles to instantly generate placement predictions and estimated salary packages for all of them at once.
+    </p>
+
+    {% if error %}
+    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 15px; border-radius: var(--radius-sm); color: #ef4444; margin-bottom: 20px; text-align: center;">
+        <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <div style="background: var(--bg-light); border: 2px dashed var(--card-border); border-radius: var(--radius-md); padding: 40px; text-align: center; transition: var(--transition);" id="dropzone">
+        <form action="{{ url_for('batch_predict_page') }}" method="post" enctype="multipart/form-data">
+            <i class="fa-solid fa-cloud-arrow-up" style="font-size: 48px; color: var(--text-light); margin-bottom: 20px;"></i>
+            <h3 style="color: var(--text-primary); margin-bottom: 10px;">Select or Drop CSV File Here</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Ensure your CSV has columns like CGPA, Internships, CodingTestScore, etc.</p>
+            
+            <input type="file" name="file" id="file-upload" accept=".csv" style="display: none;" onchange="updateFileName(this)">
+            
+            <label for="file-upload" class="btn-secondary" style="display: inline-block; cursor: pointer; margin-bottom: 20px; padding: 12px 24px;">
+                <i class="fa-solid fa-folder-open"></i> Browse Files
+            </label>
+            
+            <div id="file-name" style="color: var(--primary-solid); font-weight: 600; margin-bottom: 20px; display: none;"></div>
+            
+            <div>
+                <button type="submit" class="btn-primary" style="width: 100%; max-width: 300px; padding: 14px;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Run Batch Prediction
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div style="margin-top: 40px; padding: 20px; background: rgba(99, 102, 241, 0.05); border-radius: var(--radius-sm); border-left: 4px solid var(--primary-solid);">
+        <h4><i class="fa-solid fa-circle-info"></i> How it works</h4>
+        <ul style="color: var(--text-secondary); line-height: 1.8; margin-top: 10px; padding-left: 20px;">
+            <li>The system uses our pre-trained Random Forest Classifier to predict the `PlacementStatus`.</li>
+            <li>For candidates predicted to be placed, the Regressor estimates their `SalaryPackage`.</li>
+            <li>The output will automatically download as a new CSV file with two appended columns: `Predicted_Placement` and `Predicted_Salary_LPA`.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+function updateFileName(input) {
+    const fileNameDiv = document.getElementById('file-name');
+    if (input.files && input.files.length > 0) {
+        fileNameDiv.textContent = 'Selected: ' + input.files[0].name;
+        fileNameDiv.style.display = 'block';
+    } else {
+        fileNameDiv.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

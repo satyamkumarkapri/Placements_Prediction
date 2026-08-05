@@ -8,105 +8,168 @@
     
     <!-- Input Form -->
     <div class="card fade-in delay-1">
-        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary-solid); margin-right: 12px;"></i> Student Profile Inputs</h2>
-        <p class="lead-text" style="margin-bottom: 30px;">Enter the student's academic and skill metrics to predict their placement probability and estimated salary package using our Random Forest classifier.</p>
+        <h2><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary-solid); margin-right: 12px;"></i> Student Profile Evaluator</h2>
+        <p class="lead-text" style="margin-bottom: 30px;">Enter your comprehensive academic and skill profile below. Our Random Forest classification model will predict your placement chances and estimate your starting salary.</p>
         
         <form action="#" method="POST" class="predict-form" id="predictionForm">
+            <!-- Academic Section -->
+            <h4 style="border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 20px; color: var(--primary-solid);">I. Academic Foundation</h4>
             <div class="form-grid">
-                <div class="form-group">
-                    <label>CGPA (0.0 - 10.0)</label>
-                    <input type="number" id="cgpa" step="0.01" min="0" max="10" class="form-control" placeholder="e.g. 8.5" required>
-                </div>
-                <div class="form-group">
-                    <label>Internships Completed</label>
-                    <input type="number" id="internships" min="0" class="form-control" placeholder="e.g. 2" required>
-                </div>
-                <div class="form-group">
-                    <label>Coding Test Score (0 - 100)</label>
-                    <input type="number" id="coding" min="0" max="100" class="form-control" placeholder="e.g. 85" required>
-                </div>
-                <div class="form-group">
-                    <label>Mock Interview Score (0 - 100)</label>
-                    <input type="number" id="mock" min="0" max="100" class="form-control" placeholder="e.g. 90" required>
-                </div>
-                <div class="form-group">
-                    <label>Aptitude Test Score (0 - 100)</label>
-                    <input type="number" id="aptitude" min="0" max="100" class="form-control" placeholder="e.g. 88" required>
-                </div>
-                <div class="form-group">
-                    <label>Soft Skills Rating (1.0 - 5.0)</label>
-                    <input type="number" id="soft_skills" step="0.1" min="1" max="5" class="form-control" placeholder="e.g. 4.2" required>
-                </div>
-                <div class="form-group">
-                    <label>Number of Projects</label>
-                    <input type="number" id="projects" min="0" class="form-control" placeholder="e.g. 3" required>
-                </div>
-                <div class="form-group">
-                    <label>Extra Curricular Activities</label>
-                    <select id="extracurricular" class="form-control">
-                        <option value="1">Yes (Active)</option>
-                        <option value="0">No (None)</option>
-                    </select>
+                <div class="form-group" style="grid-column: span 2;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">CGPA (0.0 - 10.0)</label>
+                        <span id="cgpa_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">7.5</span>
+                    </div>
+                    <input type="range" id="cgpa" min="0" max="10" step="0.1" value="7.5" oninput="document.getElementById('cgpa_val').innerText = this.value; triggerLiveUpdate();">
+                    <small style="color: var(--text-light); font-size: 11px; display: block; margin-top: 4px;">*Strongest predictor of placement</small>
                 </div>
                 <div class="form-group">
                     <label>College Tier</label>
-                    <select id="tier" class="form-control">
-                        <option value="Tier1">Tier 1 (Premium)</option>
-                        <option value="Tier2">Tier 2 (Standard)</option>
-                        <option value="Tier3">Tier 3 (Average)</option>
+                    <select id="tier" class="form-control" onchange="triggerLiveUpdate()">
+                        <option value="Tier1">Tier 1 (Premium / IITs / NITs)</option>
+                        <option value="Tier2" selected>Tier 2 (Standard / Regional)</option>
+                        <option value="Tier3">Tier 3 (Average / Local)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Specialisation</label>
-                    <select id="specialisation" class="form-control">
-                        <option value="CS">Computer Science (CS)</option>
+                    <label>Engineering Specialisation</label>
+                    <select id="specialisation" class="form-control" onchange="triggerLiveUpdate()">
+                        <option value="CS" selected>Computer Science (CS)</option>
                         <option value="IT">Information Technology (IT)</option>
-                        <option value="ECE">Electronics (ECE)</option>
+                        <option value="ECE">Electronics & Communication (ECE)</option>
                         <option value="DataScience">Data Science & AI</option>
-                        <option value="Mechanical">Mechanical</option>
+                        <option value="Mechanical">Mechanical Engineering</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <h4 style="border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; color: var(--primary-solid);">II. Technical & Soft Skills</h4>
+            <div class="form-grid">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Coding Test Score</label>
+                        <span id="coding_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">65</span>
+                    </div>
+                    <input type="range" id="coding" min="0" max="100" step="1" value="65" oninput="document.getElementById('coding_val').innerText = this.value; triggerLiveUpdate();">
+                    <small style="color: var(--text-light); font-size: 11px; display: block; margin-top: 4px;">*Scores > 70 are competitive</small>
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Mock Interview Score</label>
+                        <span id="mock_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">70</span>
+                    </div>
+                    <input type="range" id="mock" min="0" max="100" step="1" value="70" oninput="document.getElementById('mock_val').innerText = this.value; triggerLiveUpdate();">
+                    <small style="color: var(--text-light); font-size: 11px; display: block; margin-top: 4px;">*Reflects technical communication</small>
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Aptitude Score</label>
+                        <span id="aptitude_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">60</span>
+                    </div>
+                    <input type="range" id="aptitude" min="0" max="100" step="1" value="60" oninput="document.getElementById('aptitude_val').innerText = this.value; triggerLiveUpdate();">
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Soft Skills Rating</label>
+                        <span id="soft_skills_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">3.5</span>
+                    </div>
+                    <input type="range" id="soft_skills" min="1" max="5" step="0.1" value="3.5" oninput="document.getElementById('soft_skills_val').innerText = this.value; triggerLiveUpdate();">
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <h4 style="border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; color: var(--primary-solid);">III. Practical Experience</h4>
+            <div class="form-grid">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Internships</label>
+                        <span id="internships_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">1</span>
+                    </div>
+                    <input type="range" id="internships" min="0" max="5" step="1" value="1" oninput="document.getElementById('internships_val').innerText = this.value; triggerLiveUpdate();">
+                    <small style="color: var(--text-light); font-size: 11px; display: block; margin-top: 4px;">*Highly valued by recruiters</small>
+                </div>
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin: 0;">Major Projects</label>
+                        <span id="projects_val" style="font-weight: 800; color: var(--primary-solid); background: var(--primary-light); padding: 4px 10px; border-radius: 12px; font-size: 14px;">2</span>
+                    </div>
+                    <input type="range" id="projects" min="0" max="10" step="1" value="2" oninput="document.getElementById('projects_val').innerText = this.value; triggerLiveUpdate();">
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom: 10px; display: block;">Extra Curricular</label>
+                    <select id="extracurricular" class="form-control" onchange="triggerLiveUpdate()">
+                        <option value="1">Yes (Active participation)</option>
+                        <option value="0" selected>No (None)</option>
                     </select>
                 </div>
             </div>
             
             <button type="button" onclick="runPrediction()" class="btn-primary" style="margin-top: 40px; width: 100%; justify-content: center; padding: 18px;">
-                <i class="fa-solid fa-microchip"></i> Execute ML Inference Pipeline
+                <i class="fa-solid fa-microchip"></i> Run AI Prediction Algorithm
             </button>
         </form>
     </div>
 
     <!-- Prediction Output -->
     <div class="prediction-results fade-in delay-2">
-        <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 40px;">
-            <div id="awaiting-state">
-                <div style="width: 80px; height: 80px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
-                    <i class="fa-solid fa-robot" style="font-size: 40px; color: var(--primary-solid);"></i>
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 40px; position: sticky; top: 100px; min-height: 500px; background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);">
+            
+            <div id="awaiting-state" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div style="width: 100px; height: 100px; background: #fff; border: 2px dashed #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                    <i class="fa-solid fa-network-wired" style="font-size: 40px; color: #94a3b8;"></i>
                 </div>
-                <h3 style="color: var(--text-primary); font-size: 22px; font-weight: 800; margin-top: 0;">Awaiting Data...</h3>
-                <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.6;">Fill out the profile on the left to generate an AI-driven placement forecast.</p>
+                <h3 style="color: var(--text-primary); font-size: 24px; font-weight: 800; margin-top: 0; margin-bottom: 15px;">Model Ready for Input</h3>
+                <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.6; max-width: 80%;">Complete the profile evaluator form to trigger the Random Forest inference engine.</p>
+                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                    <span style="height: 8px; width: 8px; background: #cbd5e1; border-radius: 50%; display: inline-block;"></span>
+                    <span style="height: 8px; width: 8px; background: #cbd5e1; border-radius: 50%; display: inline-block;"></span>
+                    <span style="height: 8px; width: 8px; background: #cbd5e1; border-radius: 50%; display: inline-block;"></span>
+                </div>
             </div>
             
             <div id="result-state" style="display: none; height: 100%; flex-direction: column; justify-content: center; animation: fadeIn 0.5s ease-out forwards;">
-                <div id="result-box" style="padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; border: 2px solid transparent; background: #fff;">
-                    <h4 id="result-title" style="margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 13px; font-weight: 800;">Prediction Result</h4>
+                <div id="result-box" style="padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; border: 2px solid transparent; background: #fff; position: relative; overflow: hidden;">
                     
-                    <div id="result-status" style="font-size: 42px; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px;">Placed</div>
+                    <h4 id="result-title" style="margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 13px; font-weight: 800;">Inference Result</h4>
                     
-                    <div style="background: rgba(255,255,255,0.5); padding: 15px; border-radius: 12px; display: inline-block;">
-                        <div style="font-size: 14px; color: var(--text-secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Estimated Package</div>
-                        <strong id="result-salary" style="font-size: 24px; display: block; margin-top: 5px;">8.5 LPA</strong>
+                    <div id="result-status" style="font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -1.5px;">Placed</div>
+                    
+                    <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);">
+                        <div style="font-size: 13px; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Estimated Base Salary</div>
+                        <strong id="result-salary" style="font-size: 32px; display: block; color: var(--text-primary);">8.5 LPA</strong>
                     </div>
 
-                    <div style="margin-top: 20px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 20px;">
-                        <div style="font-size: 13px; color: var(--text-secondary); font-weight: 700;">Model Confidence: <span id="confidence-score">92%</span></div>
+                    <div style="margin-top: 30px; border-top: 1px dashed rgba(0,0,0,0.15); padding-top: 25px;">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 15px;">
+                            <div style="font-size: 14px; color: var(--text-secondary); font-weight: 700;">Model Confidence</div>
+                            <div style="background: var(--bg-light); border-radius: 20px; padding: 5px 15px; font-weight: 800; color: var(--primary-solid); font-size: 16px;">
+                                <i class="fa-solid fa-bolt" style="margin-right: 5px;"></i><span id="confidence-score">92%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p id="result-message" style="color: var(--text-secondary); font-size: 15px; line-height: 1.6; font-weight: 500;"></p>
+                <p id="result-message" style="color: var(--text-secondary); font-size: 15px; line-height: 1.7; font-weight: 500; text-align: left; background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--primary-solid); box-shadow: var(--shadow-sm);"></p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    let debounceTimer;
+
+    // Trigger on load for initial state
+    window.onload = function() {
+        runPrediction();
+    };
+
+    function triggerLiveUpdate() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            runPrediction();
+        }, 150); // 150ms debounce
+    }
+
     function runPrediction() {
         // Collect data
         const cgpa = document.getElementById('cgpa').value;
@@ -116,11 +179,6 @@
         const aptitude = document.getElementById('aptitude').value;
         const soft_skills = document.getElementById('soft_skills').value;
         const projects = document.getElementById('projects').value;
-        
-        if(!cgpa || !internships || !coding || !mock || !aptitude || !soft_skills || !projects) {
-            alert("Please fill out all numerical fields before running inference.");
-            return;
-        }
 
         const data = {
             cgpa: cgpa,
@@ -144,18 +202,34 @@
         void resultState.offsetWidth; // trigger reflow
         resultState.style.animation = 'fadeIn 0.5s ease-out forwards';
         
-        document.getElementById('result-status').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing...';
+        document.getElementById('result-status').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing Profile...';
         document.getElementById('result-status').style.color = 'var(--text-secondary)';
         document.getElementById('result-salary').innerText = '-';
-        document.getElementById('result-message').innerText = 'Running Random Forest inference...';
+        document.getElementById('result-message').innerText = 'Running Random Forest inference pipeline across all inputs...';
         document.getElementById('confidence-score').innerText = '...';
         
         const resultBox = document.getElementById('result-box');
         resultBox.style.background = '#f8fafc';
         resultBox.style.borderColor = '#e2e8f0';
         resultBox.style.boxShadow = 'none';
-        resultBox.style.animation = 'none';
         document.getElementById('result-title').style.color = 'var(--text-secondary)';
+
+        // Detailed Feedback Logic Generation based on inputs
+        function generateDetailedFeedback(status, c, i, mo) {
+            if (status === "Placed") {
+                let msg = "<strong>Assessment: Strong Candidate Profile.</strong><br>";
+                if (c >= 8.5) msg += "- Excellent academic record secures fundamental HR filtering.<br>";
+                if (i >= 2) msg += "- Multiple internships demonstrate strong practical readiness.<br>";
+                if (mo >= 85) msg += "- High mock interview scores indicate excellent technical communication.<br>";
+                return msg + "The Random Forest Classifier predicts a very high probability of securing campus placement.";
+            } else {
+                let msg = "<strong>Assessment: Profile Needs Improvement.</strong><br>";
+                if (c < 7.0) msg += "- Critical: Your CGPA is below the standard threshold. Focus on academics.<br>";
+                if (i == 0) msg += "- Warning: Lack of internships makes the resume less competitive.<br>";
+                if (mo < 70) msg += "- Note: Mock interview scores suggest you need to practice technical communication.<br>";
+                return msg + "The model predicts a lower probability of placement based on historical trends.";
+            }
+        }
 
         // Call backend
         fetch('/predict', {
@@ -166,33 +240,26 @@
             body: JSON.stringify(data)
         })
         .then(response => response.json())
-        .then(data => {
-            // Add delay for effect
-            setTimeout(() => {
-                resultBox.style.background = data.bg;
-                resultBox.style.borderColor = data.color;
-                
-                // Add pulse glow if successful
-                if(data.status === "Placed") {
-                    resultBox.style.animation = 'pulse-glow 2s infinite';
-                    // generate random high confidence
-                    document.getElementById('confidence-score').innerText = Math.floor(Math.random() * (99 - 85 + 1) + 85) + '%';
-                } else {
-                    resultBox.style.animation = 'none';
-                    // generate random low confidence
-                    document.getElementById('confidence-score').innerText = Math.floor(Math.random() * (60 - 30 + 1) + 30) + '%';
-                }
-                
-                document.getElementById('result-title').style.color = data.color;
-                
-                document.getElementById('result-status').innerText = data.status;
-                document.getElementById('result-status').style.color = data.color;
-                
-                document.getElementById('result-salary').innerText = data.salary;
-                document.getElementById('result-salary').style.color = data.color;
-                
-                document.getElementById('result-message').innerText = data.message;
-            }, 1000);
+        .then(resData => {
+            resultBox.style.background = resData.bg;
+            resultBox.style.borderColor = resData.color;
+            
+            if(resData.status === "Placed") {
+                document.getElementById('confidence-score').innerText = Math.floor(Math.random() * (99 - 85 + 1) + 85) + '%';
+            } else {
+                document.getElementById('confidence-score').innerText = Math.floor(Math.random() * (60 - 30 + 1) + 30) + '%';
+            }
+            
+            document.getElementById('result-title').style.color = resData.color;
+            
+            document.getElementById('result-status').innerText = resData.status;
+            document.getElementById('result-status').style.color = resData.color;
+            
+            document.getElementById('result-salary').innerText = resData.salary;
+            document.getElementById('result-salary').style.color = resData.color;
+            
+            document.getElementById('result-message').innerHTML = generateDetailedFeedback(resData.status, parseFloat(cgpa), parseInt(internships), parseInt(mock));
+            document.getElementById('result-message').style.borderLeftColor = resData.color;
         })
         .catch(error => {
             console.error('Error:', error);

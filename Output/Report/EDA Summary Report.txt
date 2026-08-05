@@ -44,7 +44,7 @@ Data columns (total 32 columns):
  30  IsAnomaly           50000 non-null  int64  
  31  Salary Package      50000 non-null  float64
 dtypes: float64(16), int64(8), str(8)
-memory usage: 12.2 MB
+memory usage: 14.0 MB
 > Numeric Columns  : 24
 > Categorical Cols : 8
 

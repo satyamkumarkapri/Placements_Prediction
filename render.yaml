@@ -2,7 +2,7 @@ services:
   - type: web
     name: placement-predictor
     env: python
-    buildCommand: "pip install -r requirements.txt && python Source/download_models.py"
+    buildCommand: "pip install -r requirements.txt && python Source/train_model.py"
     startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION

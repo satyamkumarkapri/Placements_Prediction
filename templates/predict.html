@@ -113,10 +113,10 @@
 
     <!-- Prediction Output -->
     <div class="prediction-results fade-in delay-2">
-        <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 40px; position: sticky; top: 100px; min-height: 500px; background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);">
+        <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; padding: 40px; position: sticky; top: 100px; min-height: 500px;">
             
             <div id="awaiting-state" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <div style="width: 100px; height: 100px; background: #fff; border: 2px dashed #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                <div style="width: 100px; height: 100px; background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
                     <i class="fa-solid fa-network-wired" style="font-size: 40px; color: #94a3b8;"></i>
                 </div>
                 <h3 style="color: var(--text-primary); font-size: 24px; font-weight: 800; margin-top: 0; margin-bottom: 15px;">Model Ready for Input</h3>
@@ -129,13 +129,13 @@
             </div>
             
             <div id="result-state" style="display: none; height: 100%; flex-direction: column; justify-content: center; animation: fadeIn 0.5s ease-out forwards;">
-                <div id="result-box" style="padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; border: 2px solid transparent; background: #fff; position: relative; overflow: hidden;">
+                <div id="result-box" style="padding: 40px 20px; border-radius: 20px; margin-bottom: 25px; border: 2px solid transparent; background: rgba(255, 255, 255, 0.03); position: relative; overflow: hidden;">
                     
                     <h4 id="result-title" style="margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1.5px; font-size: 13px; font-weight: 800;">Inference Result</h4>
                     
                     <div id="result-status" style="font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -1.5px;">Placed</div>
                     
-                    <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.05);">
                         <div style="font-size: 13px; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Estimated Base Salary</div>
                         <strong id="result-salary" style="font-size: 32px; display: block; color: var(--text-primary);">8.5 LPA</strong>
                     </div>
@@ -149,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <p id="result-message" style="color: var(--text-secondary); font-size: 15px; line-height: 1.7; font-weight: 500; text-align: left; background: #fff; padding: 20px; border-radius: 12px; border-left: 5px solid var(--primary-solid); box-shadow: var(--shadow-sm);"></p>
+                <p id="result-message" style="color: var(--text-secondary); font-size: 15px; line-height: 1.7; font-weight: 500; text-align: left; background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 12px; border-left: 5px solid var(--primary-solid); box-shadow: var(--shadow-sm);"></p>
             </div>
         </div>
     </div>
@@ -209,8 +209,8 @@
         document.getElementById('confidence-score').innerText = '...';
         
         const resultBox = document.getElementById('result-box');
-        resultBox.style.background = '#f8fafc';
-        resultBox.style.borderColor = '#e2e8f0';
+        resultBox.style.background = 'rgba(255, 255, 255, 0.03)';
+        resultBox.style.borderColor = 'rgba(255, 255, 255, 0.1)';
         resultBox.style.boxShadow = 'none';
         document.getElementById('result-title').style.color = 'var(--text-secondary)';
 

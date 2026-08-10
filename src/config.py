@@ -1,7 +1,7 @@
 import os
 
 # Base directory of the project
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Data Directories
 DATA_DIR = os.path.join(BASE_DIR, 'Data')

@@ -12,7 +12,7 @@ COPY . .
 
 # IMPORTANT: Train the models during the Docker build process!
 # This ensures the large .joblib files are generated inside the container
-RUN python Source/train_model.py
+RUN python src/train_model.py
 
 # Expose port 7860 (Hugging Face default)
 EXPOSE 7860

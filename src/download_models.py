@@ -8,7 +8,7 @@ if __name__ == "__main__":
     print("to guarantee scikit-learn version compatibility!")
     print("===============================================================")
     
-    exit_code = os.system("python Source/train_model.py")
+    exit_code = os.system("python src/train_model.py")
     if exit_code != 0:
         print("Model training failed!", file=sys.stderr)
         sys.exit(1)

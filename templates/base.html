@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2">
 </head>
 <body>
     <div class="app-container">
@@ -71,6 +71,14 @@
                     <h1>{% block page_title %}Overview{% endblock %}</h1>
                 </div>
                 <div class="topbar-right">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search reports...">
+                    </div>
+                    <div class="nav-icons">
+                        <a href="#" class="icon-btn"><i class="fa-regular fa-bell"></i><span class="notify-dot"></span></a>
+                        <a href="#" class="icon-btn"><i class="fa-solid fa-gear"></i></a>
+                    </div>
                     <div class="status-badge">
                         <span class="dot"></span> Pipeline Active
                     </div>
@@ -80,6 +88,38 @@
             <!-- Dynamic Content -->
             <div class="content-wrapper">
                 {% block content %}{% endblock %}
+
+                <!-- Global Footer -->
+                <footer class="app-footer fade-in delay-3">
+                    <div class="footer-content">
+                        <div class="footer-brand">
+                            <h3><i class="fa-solid fa-graduation-cap" style="color: var(--primary-solid);"></i> Placement AI</h3>
+                            <p>Empowering students and universities with predictive insights for better career outcomes.</p>
+                        </div>
+                        <div class="footer-links">
+                            <h4>Resources</h4>
+                            <a href="#">API Documentation</a>
+                            <a href="#">Model Architecture</a>
+                            <a href="#">Data Privacy</a>
+                        </div>
+                        <div class="footer-newsletter">
+                            <h4>Stay Updated</h4>
+                            <p>Get notified about new model versions.</p>
+                            <div class="newsletter-box">
+                                <input type="email" placeholder="Email address" class="form-control" style="padding: 10px; max-width: 200px;">
+                                <button class="btn-primary" style="padding: 10px 15px;">Subscribe</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2026 Placement Analytics Platform. All rights reserved.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fa-brands fa-github"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </main>
     </div>

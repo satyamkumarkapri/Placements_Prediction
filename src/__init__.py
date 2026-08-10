@@ -1,5 +1,5 @@
 """
-Source Module for Placement Analytics
+src Module for Placement Analytics
 
 This package contains the Machine Learning training scripts, data utility
 functions, and Exploratory Data Analysis (EDA) pipelines for the Placement 

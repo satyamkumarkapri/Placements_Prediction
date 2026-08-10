@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ### 4. Train the Models (Required)
 *Note: Large model files are ignored by GitHub due to size constraints. You must generate them locally before running the app.*
 ```bash
-python Source/train_model.py
+python src/train_model.py
 ```
 *This will process the 50k dataset and generate the necessary `.joblib` files inside the `/models/` directory.*
 
@@ -60,7 +60,7 @@ Open your browser and navigate to `http://localhost:5001`.
 📦 Placements_Prediction
  ┣ 📂 Data/               # Raw 50k CSV Datasets
  ┣ 📂 Output/             # Generated EDA Reports and PNG Plots
- ┣ 📂 Source/             # ML Training and EDA Scripts
+ ┣ 📂 src/             # ML Training and EDA Scripts
  ┣ 📂 models/             # Compiled .joblib models (Generated locally)
  ┣ 📂 static/             # CSS stylesheets and assets
  ┣ 📂 templates/          # HTML Jinja templates (Dashboard, EDA, Predict)

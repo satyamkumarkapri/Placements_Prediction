@@ -63,4 +63,33 @@
         </div>
     </div>
 </div>
+
+<div class="card fade-in delay-3" style="margin-bottom: 20px;">
+    <h2><i class="fa-solid fa-cloud-arrow-down" style="color: #8b5cf6; margin-right: 12px;"></i> Download Center</h2>
+    <p class="lead-text">Export raw artifacts, datasets, and machine learning models for offline analysis or deployment.</p>
+    
+    <div class="feature-grid" style="margin-top: 20px;">
+        <div class="feature-box" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4><i class="fa-solid fa-file-csv" style="color: #10b981; margin-right: 8px;"></i> Raw Dataset (CSV)</h4>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-top: 5px;">50,000 Records • 32 Features • 14.2 MB</p>
+            </div>
+            <a href="#" class="btn-primary" style="padding: 10px 15px; font-size: 13px;"><i class="fa-solid fa-download"></i> Export</a>
+        </div>
+        <div class="feature-box" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4><i class="fa-solid fa-file-lines" style="color: #3b82f6; margin-right: 8px;"></i> Full EDA Report</h4>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-top: 5px;">Statistical profile and correlations • TXT</p>
+            </div>
+            <a href="{{ url_for('eda_page') }}" class="btn-primary" style="padding: 10px 15px; font-size: 13px; background: rgba(59, 130, 246, 0.2); color: #3b82f6;"><i class="fa-solid fa-eye"></i> View</a>
+        </div>
+        <div class="feature-box" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4><i class="fa-solid fa-cubes" style="color: #f59e0b; margin-right: 8px;"></i> Trained Models (Joblib)</h4>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-top: 5px;">RandomForest Classifier & Regressor</p>
+            </div>
+            <a href="#" class="btn-primary" style="padding: 10px 15px; font-size: 13px;"><i class="fa-solid fa-download"></i> Export</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

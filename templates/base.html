@@ -36,6 +36,18 @@
                     <i class="fa-solid fa-laptop-code"></i>
                     <span>Feature Engg</span>
                 </a>
+                <a href="{{ url_for('scaling_page') }}" class="nav-item {% if request.endpoint == 'scaling_page' %}active{% endif %}">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Feature Scaling</span>
+                </a>
+                <a href="{{ url_for('encoding_page') }}" class="nav-item {% if request.endpoint == 'encoding_page' %}active{% endif %}">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Cat Encoding</span>
+                </a>
+                <a href="{{ url_for('explain_page') }}" class="nav-item {% if request.endpoint == 'explain_page' %}active{% endif %}">
+                    <i class="fa-solid fa-microscope"></i>
+                    <span>Explain AI (SHAP)</span>
+                </a>
                 <a href="{{ url_for('evaluation_page') }}" class="nav-item {% if request.endpoint == 'evaluation_page' %}active{% endif %}">
                     <i class="fa-solid fa-chart-line"></i>
                     <span>Model Evaluation</span>

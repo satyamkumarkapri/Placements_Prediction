@@ -11,7 +11,7 @@ def main():
     
     # 1. Load Data
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    DATA_PATH = os.path.join(BASE_DIR, "Data", "placement_predict_50k Dataset (2).csv")
+    DATA_PATH = os.path.join(BASE_DIR, "data", "clean", "cleaned_placement_data.csv")
     
     if not os.path.exists(DATA_PATH):
         print(f"Error: Dataset not found at {DATA_PATH}")

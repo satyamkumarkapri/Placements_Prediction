@@ -4,11 +4,11 @@ import os
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 # Data Directories
-DATA_DIR = os.path.join(BASE_DIR, 'Data')
-DATASET_PATH = os.path.join(DATA_DIR, 'placement_predict_50k Dataset (2).csv')
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATASET_PATH = os.path.join(DATA_DIR, 'raw', 'placement_data.csv')
 
 # Output Directories
-OUTPUT_DIR = os.path.join(BASE_DIR, 'Output')
+OUTPUT_DIR = os.path.join(BASE_DIR, 'output')
 PLOT_DIR = os.path.join(OUTPUT_DIR, 'Plot')
 REPORT_DIR = os.path.join(OUTPUT_DIR, 'Report')
 

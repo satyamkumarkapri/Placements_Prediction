@@ -69,8 +69,11 @@ Open your browser and navigate to `http://localhost:5001`.
 ## 📂 Project Architecture
 ```text
 📦 Placements_Prediction
- ┣ 📂 Data/               # Raw 50k CSV Datasets used for training
- ┣ 📂 Output/             # Generated EDA Reports (TXT) and Visual Plots (PNG)
+ ┣ 📂 data/               # CSV Datasets used for training
+ ┃ ┣ 📂 raw/              # Raw data files (e.g. placement_data.csv)
+ ┃ ┗ 📂 clean/            # Processed datasets
+ ┣ 📂 output/             # Generated EDA Reports (TXT) and Visual Plots (PNG)
+ ┣ 📂 docs/               # Documentation (e.g. Feature Scaling)
  ┣ 📂 src/                # Core ML Engine
  ┃ ┣ 📜 config.py         # Global configuration and path variables
  ┃ ┣ 📜 data_utils.py     # Data loading and preprocessing helpers

@@ -7,10 +7,10 @@ import joblib
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PLOT_PATH = os.path.join(BASE_DIR, "Output", "Plot")
-REPORT_PATH = os.path.join(BASE_DIR, "Output", "Report")
+PLOT_PATH = os.path.join(BASE_DIR, "output", "Plot")
+REPORT_PATH = os.path.join(BASE_DIR, "output", "Report")
 MODEL_DIR = os.path.join(BASE_DIR, "models")
-DATA_PATH = os.path.join(BASE_DIR, "Data", "placement_predict_50k Dataset (2).csv")
+DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "placement_data.csv")
 
 # Load ML Models at startup
 clf_pipeline = None
@@ -103,6 +103,18 @@ def serve_plot(filename):
 @app.route('/feature_engg')
 def feature_engg_page():
     return render_template('feature.html')
+
+@app.route('/scaling')
+def scaling_page():
+    return render_template('scaling.html')
+
+@app.route('/encoding')
+def encoding_page():
+    return render_template('encoding.html')
+
+@app.route('/explain')
+def explain_page():
+    return render_template('explain.html')
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict_page():

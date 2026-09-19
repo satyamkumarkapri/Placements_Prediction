@@ -11,6 +11,7 @@ DATASET_PATH = os.path.join(DATA_DIR, 'raw', 'placement_data.csv')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'output')
 PLOT_DIR = os.path.join(OUTPUT_DIR, 'Plot')
 REPORT_DIR = os.path.join(OUTPUT_DIR, 'Report')
+DBSCAN_DIR = os.path.join(OUTPUT_DIR, 'DBSCAN')
 
 # Model Directory
 MODEL_DIR = os.path.join(BASE_DIR, 'models')
@@ -26,3 +27,14 @@ FLASK_DEBUG = True
 RANDOM_STATE = 42
 TEST_SIZE = 0.2
 N_ESTIMATORS = 100
+
+CLEAN_DATA_PATH = os.path.join(DATA_DIR, 'clean', 'cleaned_placement_data.csv')
+TARGET_COLUMN = 'PlacementStatus'
+NUMERIC_COLUMNS = [
+    'SGPA_Sem1', 'SGPA_Sem2', 'SGPA_Sem3', 'SGPA_Sem4', 
+    'SGPA_Sem5', 'SGPA_Sem6', 'SGPA_Sem7', 'SGPA_Sem8', 
+    'CGPA', 'AttendancePercent', 'Internships', 'Projects', 
+    'Workshops', 'Certifications', 'Publications', 
+    'AptitudeTestScore', 'SoftSkillsRating', 'CodingTestScore', 
+    'MockInterviewScore'
+]

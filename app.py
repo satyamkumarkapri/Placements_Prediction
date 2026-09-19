@@ -11,14 +11,25 @@ PLOT_PATH = os.path.join(BASE_DIR, "output", "Plot")
 REPORT_PATH = os.path.join(BASE_DIR, "output", "Report")
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 DATA_PATH = os.path.join(BASE_DIR, "data", "raw", "placement_data.csv")
+DBSCAN_PATH = os.path.join(BASE_DIR, "output", "DBSCAN")
 
 # Load ML Models at startup
-clf_pipeline = None
-reg_pipeline = None
+models = {
+    'rf': {'clf': None, 'reg': None},
+    'ridge': {'clf': None, 'reg': None},
+    'lasso': {'clf': None, 'reg': None},
+    'elasticnet': {'clf': None, 'reg': None},
+}
 try:
-    clf_pipeline = joblib.load(os.path.join(MODEL_DIR, "placement_classifier.joblib"))
-    reg_pipeline = joblib.load(os.path.join(MODEL_DIR, "salary_regressor.joblib"))
-    print("Machine Learning Models Loaded Successfully.")
+    models['rf']['clf'] = joblib.load(os.path.join(MODEL_DIR, "placement_classifier.joblib"))
+    models['rf']['reg'] = joblib.load(os.path.join(MODEL_DIR, "salary_regressor.joblib"))
+    models['ridge']['clf'] = joblib.load(os.path.join(MODEL_DIR, "ridge_classifier.joblib"))
+    models['ridge']['reg'] = joblib.load(os.path.join(MODEL_DIR, "ridge_regressor.joblib"))
+    models['lasso']['clf'] = joblib.load(os.path.join(MODEL_DIR, "lasso_classifier.joblib"))
+    models['lasso']['reg'] = joblib.load(os.path.join(MODEL_DIR, "lasso_regressor.joblib"))
+    models['elasticnet']['clf'] = joblib.load(os.path.join(MODEL_DIR, "elasticnet_classifier.joblib"))
+    models['elasticnet']['reg'] = joblib.load(os.path.join(MODEL_DIR, "elasticnet_regressor.joblib"))
+    print("All Machine Learning Models Loaded Successfully.")
 except Exception as e:
     print("Warning: Could not load ML models:", e)
 
@@ -100,17 +111,49 @@ def eda_page():
 def serve_plot(filename):
     return send_from_directory(PLOT_PATH, filename)
 
-@app.route('/feature_engg')
-def feature_engg_page():
-    return render_template('feature.html')
+@app.route('/dbscan_plots/<filename>')
+def serve_dbscan_plot(filename):
+    return send_from_directory(DBSCAN_PATH, filename)
 
-@app.route('/scaling')
-def scaling_page():
-    return render_template('scaling.html')
+@app.route('/clustering')
+def clustering_page():
+    # K-Means and Hierarchical plots
+    try:
+        plot_files = os.listdir(PLOT_PATH)
+        kmeans_plots = [f for f in plot_files if f.startswith('kmeans_')]
+        hierarchical_plots = [f for f in plot_files if f.startswith('hierarchical_')]
+    except FileNotFoundError:
+        kmeans_plots = []
+        hierarchical_plots = []
+        
+    # DBSCAN plots and report
+    dbscan_report = ""
+    try:
+        dbscan_plot_files = os.listdir(DBSCAN_PATH)
+        dbscan_plots = [f for f in dbscan_plot_files if f.endswith('.png')]
+        
+        report_path = os.path.join(DBSCAN_PATH, "dbscan_report.txt")
+        if os.path.exists(report_path):
+            with open(report_path, "r") as f:
+                dbscan_report = f.read()
+    except FileNotFoundError:
+        dbscan_plots = []
 
-@app.route('/encoding')
-def encoding_page():
-    return render_template('encoding.html')
+    return render_template('clustering.html', 
+                          kmeans_plots=sorted(kmeans_plots), 
+                          hierarchical_plots=sorted(hierarchical_plots),
+                          dbscan_plots=sorted(dbscan_plots),
+                          dbscan_report=dbscan_report)
+
+@app.route('/curriculum')
+def curriculum_page():
+    try:
+        import json
+        with open(os.path.join(REPORT_PATH, "dt_metrics.json"), "r") as f:
+            dt_metrics = json.load(f)
+    except FileNotFoundError:
+        dt_metrics = {}
+    return render_template('curriculum.html', dt_metrics=dt_metrics)
 
 @app.route('/explain')
 def explain_page():
@@ -134,17 +177,22 @@ def predict_page():
                 'Specialisation': data.get('specialisation', 'CS')
             }])
 
-            if clf_pipeline and reg_pipeline:
-                pred_class = clf_pipeline.predict(input_df)[0]
+            alg = data.get('algorithm', 'rf')
+            selected_models = models.get(alg, models['rf'])
+            clf_model = selected_models['clf']
+            reg_model = selected_models['reg']
+
+            if clf_model and reg_model:
+                pred_class = clf_model.predict(input_df)[0]
                 try:
-                    proba = clf_pipeline.predict_proba(input_df)[0]
+                    proba = clf_model.predict_proba(input_df)[0]
                     confidence = round(max(proba) * 100, 1)
                 except:
                     confidence = 90
 
                 if pred_class == 1:
                     status = "Placed"
-                    raw_salary = reg_pipeline.predict(input_df)[0]
+                    raw_salary = reg_model.predict(input_df)[0]
                     cgpa_val = float(data.get('cgpa', 0))
                     coding_val = float(data.get('coding', 0))
                     internships_val = int(data.get('internships', 0))
@@ -164,7 +212,7 @@ def predict_page():
                     else:
                         tier_label = "Standard Package"
 
-                    assessment = "Excellent academic record secures fundamental HR filtering.\n- The Random Forest Classifier predicts a very high probability of securing campus placement.\n- Focus on top-tier companies for maximum salary potential."
+                    assessment = "Excellent academic record secures fundamental HR filtering.\n- The model predicts a very high probability of securing campus placement.\n- Focus on top-tier companies for maximum salary potential."
                     color = "#10b981"
                     bg = "rgba(16, 185, 129, 0.1)"
                     border = "rgba(16, 185, 129, 0.3)"
@@ -221,10 +269,12 @@ def batch_predict_page():
         if file and file.filename.endswith('.csv'):
             try:
                 df = pd.read_csv(file)
-                if not clf_pipeline or not reg_pipeline:
+                clf_model = models['rf']['clf']
+                reg_model = models['rf']['reg']
+                if not clf_model or not reg_model:
                     return render_template('batch_predict.html', error='ML models are not loaded.')
-                df['Predicted_Placement'] = clf_pipeline.predict(df)
-                salaries = reg_pipeline.predict(df)
+                df['Predicted_Placement'] = clf_model.predict(df)
+                salaries = reg_model.predict(df)
                 df['Predicted_Salary_LPA'] = [round(sal, 2) if p == 1 else 0.0 for sal, p in zip(salaries, df['Predicted_Placement'])]
                 df['Predicted_Placement'] = df['Predicted_Placement'].map({1: 'Placed', 0: 'Not Placed'})
                 csv_buffer = io.StringIO()
@@ -253,4 +303,4 @@ def api_stats():
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True)
+    app.run(host='0.0.0.0', port=5007, debug=True)

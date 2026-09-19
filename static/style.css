@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    /* Premium Dark Glassmorphism Theme */
-    --bg-light: #0b0f19;
-    --sidebar-bg: rgba(15, 23, 42, 0.6);
-    --card-bg: rgba(15, 23, 42, 0.4);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    /* Premium Light Glassmorphism Theme */
+    --bg-light: #f8fafc;
+    --sidebar-bg: rgba(255, 255, 255, 0.75);
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --card-border: rgba(226, 232, 240, 0.8);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
     
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-light: #94a3b8;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-light: #64748b;
     
     --primary-solid: #6366f1;
     --primary-light: rgba(99, 102, 241, 0.15);
@@ -39,8 +39,8 @@
 
 body {
     margin: 0;
-    font-family: \'Plus Jakarta Sans\', sans-serif;
-    background: radial-gradient(circle at top right, #1e1b4b 0%, #0b0f19 40%, #0b0f19 100%);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: radial-gradient(circle at top right, #e0e7ff 0%, #f8fafc 40%, #f1f5f9 100%);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
 }
@@ -192,7 +192,7 @@ body {
     gap: 12px;
     padding: 12px;
     border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid var(--card-border);
 }
 
@@ -233,7 +233,7 @@ body {
     align-items: center;
     padding: 0 40px;
     z-index: 10;
-    background: rgba(15, 23, 42, 0.6);
+    background: var(--card-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 }
@@ -595,7 +595,7 @@ body {
 }
 
 .tech-tag {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid var(--card-border);
     padding: 12px 20px;
     border-radius: var(--radius-sm);
@@ -721,7 +721,7 @@ input[type=range]::-webkit-slider-thumb:hover {
     box-shadow: var(--shadow-sm);
     object-fit: contain;
     transition: var(--transition);
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.5);
     padding: 10px;
     border: 1px solid var(--card-border);
 }
@@ -810,7 +810,7 @@ pre.terminal-report {
 }
 
 .data-table th {
-    background-color: rgba(15, 23, 42, 0.8);
+    background-color: rgba(241, 245, 249, 0.9);
     color: var(--text-primary);
     font-weight: 800;
     position: sticky;
@@ -882,8 +882,8 @@ pre.terminal-report {
 }
 
 .form-control {
-    background: rgba(15, 23, 42, 0.6);
-    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #e2e8f0;
     padding: 16px 20px;
     border-radius: var(--radius-md);
     color: var(--text-primary);
@@ -896,7 +896,7 @@ pre.terminal-report {
 
 .form-control:focus {
     outline: none;
-    background: rgba(15, 23, 42, 0.8);
+    background: #ffffff;
     border-color: var(--primary-solid);
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
 }
@@ -1028,7 +1028,7 @@ select.form-control option {
         padding: 0 20px;
         height: 60px;
         min-height: 60px;
-        background: rgba(15, 23, 42, 0.6);
+        background: var(--card-bg);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
 }
@@ -1074,7 +1074,7 @@ select.form-control option {
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 6px 16px;
@@ -1102,7 +1102,7 @@ select.form-control option {
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.03);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1112,7 +1112,7 @@ select.form-control option {
     transition: var(--transition);
 }
 .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     color: var(--primary-solid);
 }
 .notify-dot {

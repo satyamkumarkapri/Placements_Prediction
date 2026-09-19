@@ -32,17 +32,13 @@
                     <i class="fa-solid fa-chart-pie"></i>
                     <span>EDA Report</span>
                 </a>
-                <a href="{{ url_for('feature_engg_page') }}" class="nav-item {% if request.endpoint == 'feature_engg_page' %}active{% endif %}">
-                    <i class="fa-solid fa-laptop-code"></i>
-                    <span>Feature Engg</span>
+                <a href="{{ url_for('clustering_page') }}" class="nav-item {% if request.endpoint == 'clustering_page' %}active{% endif %}">
+                    <i class="fa-solid fa-project-diagram"></i>
+                    <span>Clustering</span>
                 </a>
-                <a href="{{ url_for('scaling_page') }}" class="nav-item {% if request.endpoint == 'scaling_page' %}active{% endif %}">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <span>Feature Scaling</span>
-                </a>
-                <a href="{{ url_for('encoding_page') }}" class="nav-item {% if request.endpoint == 'encoding_page' %}active{% endif %}">
-                    <i class="fa-solid fa-layer-group"></i>
-                    <span>Cat Encoding</span>
+                <a href="{{ url_for('curriculum_page') }}" class="nav-item {% if request.endpoint == 'curriculum_page' %}active{% endif %}">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Algorithm Concepts</span>
                 </a>
                 <a href="{{ url_for('explain_page') }}" class="nav-item {% if request.endpoint == 'explain_page' %}active{% endif %}">
                     <i class="fa-solid fa-microscope"></i>

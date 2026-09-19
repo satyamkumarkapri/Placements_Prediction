@@ -8,6 +8,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression, Ridge, Lasso, ElasticNet
 import joblib
 import matplotlib
 matplotlib.use('Agg')
@@ -97,9 +98,9 @@ preprocessor = ColumnTransformer(
 )
 
 # Define the models
-rf_clf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
-xgb_clf = XGBClassifier(n_estimators=100, random_state=42, use_label_encoder=False, eval_metric='logloss')
-reg = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
+rf_clf = RandomForestClassifier(n_estimators=50, max_depth=15, random_state=42, n_jobs=-1)
+xgb_clf = XGBClassifier(n_estimators=50, max_depth=10, random_state=42, use_label_encoder=False, eval_metric='logloss')
+reg = RandomForestRegressor(n_estimators=50, max_depth=15, random_state=42, n_jobs=-1)
 
 # Fit preprocessor first to transform data for SHAP
 print("Training Classification Models...")
@@ -129,6 +130,20 @@ print(f"Best Model Selected: {best_clf_name} (Acc: {max(rf_acc, xgb_acc):.3f})")
 # Bundle the best classifier in the pipeline
 clf_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", best_clf)])
 reg_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", reg)])
+
+# Linear pipelines
+ridge_clf_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", LogisticRegression(penalty='l2', solver='lbfgs', max_iter=1000, random_state=42))])
+lasso_clf_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", LogisticRegression(penalty='l1', solver='liblinear', max_iter=1000, random_state=42))])
+elasticnet_clf_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("classifier", LogisticRegression(penalty='elasticnet', solver='saga', l1_ratio=0.5, max_iter=1000, random_state=42))])
+
+ridge_reg_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", Ridge(alpha=1.0, random_state=42))])
+lasso_reg_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", Lasso(alpha=0.1, random_state=42))])
+elasticnet_reg_pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", ElasticNet(alpha=0.1, l1_ratio=0.5, random_state=42))])
+
+print("Training Linear Classification Models...")
+ridge_clf_pipeline.fit(X_train_c, y_train_c)
+lasso_clf_pipeline.fit(X_train_c, y_train_c)
+elasticnet_clf_pipeline.fit(X_train_c, y_train_c)
 
 # Generate SHAP Plot
 print("Generating SHAP Explainability Plot...")
@@ -163,9 +178,23 @@ X_train_r, X_test_r, y_train_r, y_test_r = train_test_split(
 reg_pipeline.fit(X_train_r, y_train_r)
 print(f"Regression Test R2 Score: {reg_pipeline.score(X_test_r, y_test_r):.3f}")
 
+print("Training Linear Regression Models...")
+ridge_reg_pipeline.fit(X_train_r, y_train_r)
+lasso_reg_pipeline.fit(X_train_r, y_train_r)
+elasticnet_reg_pipeline.fit(X_train_r, y_train_r)
+
 # Save models
 print("Saving models to /models ...")
 joblib.dump(clf_pipeline, os.path.join(MODEL_DIR, "placement_classifier.joblib"))
 joblib.dump(reg_pipeline, os.path.join(MODEL_DIR, "salary_regressor.joblib"))
+
+joblib.dump(ridge_clf_pipeline, os.path.join(MODEL_DIR, "ridge_classifier.joblib"))
+joblib.dump(ridge_reg_pipeline, os.path.join(MODEL_DIR, "ridge_regressor.joblib"))
+
+joblib.dump(lasso_clf_pipeline, os.path.join(MODEL_DIR, "lasso_classifier.joblib"))
+joblib.dump(lasso_reg_pipeline, os.path.join(MODEL_DIR, "lasso_regressor.joblib"))
+
+joblib.dump(elasticnet_clf_pipeline, os.path.join(MODEL_DIR, "elasticnet_classifier.joblib"))
+joblib.dump(elasticnet_reg_pipeline, os.path.join(MODEL_DIR, "elasticnet_regressor.joblib"))
 
 print("Training Complete! Models saved successfully.")

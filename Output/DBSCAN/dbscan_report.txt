@@ -1,0 +1,34 @@
+DBSCAN on 5,000 students, 19 scaled, median-imputed
+numeric features (same pipeline as Sessions 21, 23 & 24).
+
+min_samples = 38 (rule of thumb: 2 x n_features)
+eps = 2.63 (read from k-distance plot elbow, max-curvature method)
+
+Clusters found: 1
+Core points:    4,594 (91.9%)
+Noise points:   129 (2.6%)
+
+Cluster sizes (-1 = noise):
+-1     129
+ 0    4871
+
+Overlap with the dataset's own IsAnomaly flag (never shown to DBSCAN):
+  Points flagged as both noise and anomalous: 118
+  Of DBSCAN's noise points, 91.5% are also IsAnomaly=1
+  Of IsAnomaly=1 students, 63.4% were caught as noise
+
+
+eps sensitivity (min_samples held fixed):
+  eps=1.31: 0 clusters, 5,000 noise points
+  eps=2.63: 1 clusters, 129 noise points
+  eps=5.26: 1 clusters, 0 noise points
+
+Placement rate, clustered points: 65.3%
+Placement rate, noise points:     65.1%
+
+DBSCAN vs Sessions 21/24:
+  K-Means and Ward linkage force every point into a cluster and need
+  K chosen up front. DBSCAN infers cluster count from density and
+  explicitly separates out points that don't belong anywhere -
+  at the cost of needing eps and min_samples tuned instead of K,
+  and struggling when clusters have very different densities.

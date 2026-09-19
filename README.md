@@ -27,6 +27,30 @@ This project goes beyond a simple ML script; it provides a **production-ready Sa
 - **Automated EDA**: Generates detailed Exploratory Data Analysis reports and high-resolution Univariate, Bivariate, and Multivariate visualizations dynamically.
 - **Download Center**: A dedicated hub to view and export raw datasets, trained `.joblib` model files, and detailed statistical `.txt` reports for offline use.
 
+## 📚 Applied Machine Learning Curriculum
+This project serves as a comprehensive implementation of a 15-module curriculum, demonstrating practical application of both fundamental and advanced machine learning concepts:
+
+### MODULE 1 • FOUNDATIONS
+1. **Data Ingestion:** Automated loading of the 50k student record dataset (`src/clean_data.py`).
+2. **Baseline Model and Serving:** End-to-end Flask integration serving baseline predictions (`app.py`).
+3. **Exploratory Data Analysis (First Pass):** Interactive data profiling and distribution analysis (`templates/eda.html`).
+4. **Data Cleaning:** Handling missing values, outlier removal, and dataset structuring (`src/clean_data.py`).
+
+### MODULE 2 • LINEAR MODELS
+5. **Train, Validation, and Test Splitting:** Strategic dataset partitioning for robust evaluation (`src/train_model.py`).
+6. **Linear Regression Basics:** Implementation of multilinear regression for salary package estimation (`src/multilinear_regression.py`).
+7. **Feature Scaling:** Comparative analysis of Min-Max, Standard, and Robust scalers (`templates/scaling.html`).
+8. **Encoding and Imputation:** One-hot encoding for categoricals and strategy-based imputation (`templates/encoding.html`).
+9. **Logistic Regression (Binary/Multi-Class):** Multinomial classification for placement status (`src/multinomial_logistic_regression.py`).
+10. **Regularization:** L1 (Lasso) and L2 (Ridge) penalty experiments to prevent overfitting (`src/regularization_experiments.py`).
+11. **Building an End-to-End Pipeline:** Scikit-Learn `ColumnTransformer` and `Pipeline` integration (`src/train_model.py`).
+12. **Interpreting Model Coefficients:** Advanced SHAP (SHapley Additive exPlanations) value analysis for explainable AI (`templates/explain.html`).
+
+### MODULE 3 • TREE-BASED MODELS
+13. **Decision Trees:** Unconstrained and shallow tree structure analysis (`templates/decision_trees.html`).
+14. **Pruning and Splitting Criteria:** Gini vs. Entropy evaluations and Cost Complexity Pruning (`ccp_alpha`).
+15. **Bias-Variance Tradeoff via Tree Depth:** Visualizing the transition from high-bias underfitting to high-variance overfitting.
+
 ## 🛠️ Technology Stack
 
 - **Backend / Web Framework**: Python 3, Flask, Jinja2

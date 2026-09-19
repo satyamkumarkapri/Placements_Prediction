@@ -13,6 +13,18 @@
         
         <form action="#" method="POST" class="predict-form" id="predictionForm">
             <!-- Academic Section -->
+            <h4 style="border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 20px; color: var(--primary-solid);">Model Selection</h4>
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label>Prediction Algorithm</label>
+                <select id="algorithm" class="form-control" onchange="triggerLiveUpdate()">
+                    <option value="rf" selected>Random Forest / XGBoost (Default)</option>
+                    <option value="ridge">Ridge Regression (L2 Penalty)</option>
+                    <option value="lasso">Lasso Regression (L1 Penalty)</option>
+                    <option value="elasticnet">Elastic Net (L1 + L2 Penalty)</option>
+                </select>
+                <small style="color: var(--text-light); font-size: 11px; display: block; margin-top: 4px;">*Select the regularized model you wish to use for inference</small>
+            </div>
+
             <h4 style="border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 20px; color: var(--primary-solid);">I. Academic Foundation</h4>
             <div class="form-grid">
                 <div class="form-group" style="grid-column: span 2;">
@@ -180,18 +192,19 @@
         const soft_skills = document.getElementById('soft_skills').value;
         const projects = document.getElementById('projects').value;
 
-        const data = {
-            cgpa: cgpa,
-            internships: internships,
-            coding: coding,
-            mock: mock,
-            aptitude: aptitude,
-            soft_skills: soft_skills,
-            projects: projects,
-            extracurricular: document.getElementById('extracurricular').value,
-            tier: document.getElementById('tier').value,
-            specialisation: document.getElementById('specialisation').value
-        };
+            const data = {
+                algorithm: document.getElementById('algorithm').value,
+                cgpa: cgpa,
+                internships: internships,
+                coding: coding,
+                mock: mock,
+                aptitude: aptitude,
+                soft_skills: soft_skills,
+                projects: projects,
+                extracurricular: document.getElementById('extracurricular').value,
+                tier: document.getElementById('tier').value,
+                specialisation: document.getElementById('specialisation').value
+            };
         
         // Show loading state
         document.getElementById('awaiting-state').style.display = 'none';
@@ -205,7 +218,9 @@
         document.getElementById('result-status').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Analyzing Profile...';
         document.getElementById('result-status').style.color = 'var(--text-secondary)';
         document.getElementById('result-salary').innerText = '-';
-        document.getElementById('result-message').innerText = 'Running Random Forest inference pipeline across all inputs...';
+        
+        let algName = document.getElementById('algorithm').options[document.getElementById('algorithm').selectedIndex].text;
+        document.getElementById('result-message').innerText = `Running ${algName} inference pipeline across all inputs...`;
         document.getElementById('confidence-score').innerText = '...';
         
         const resultBox = document.getElementById('result-box');
@@ -221,7 +236,7 @@
                 if (c >= 8.5) msg += "- Excellent academic record secures fundamental HR filtering.<br>";
                 if (i >= 2) msg += "- Multiple internships demonstrate strong practical readiness.<br>";
                 if (mo >= 85) msg += "- High mock interview scores indicate excellent technical communication.<br>";
-                return msg + "The Random Forest Classifier predicts a very high probability of securing campus placement.";
+                return msg + `The selected model predicts a very high probability of securing campus placement.`;
             } else {
                 let msg = "<strong>Assessment: Profile Needs Improvement.</strong><br>";
                 if (c < 7.0) msg += "- Critical: Your CGPA is below the standard threshold. Focus on academics.<br>";

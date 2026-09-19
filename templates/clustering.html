@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Clustering | Placement Analytics{% endblock %}
+{% block page_title %}Unsupervised Learning & Clustering{% endblock %}
+
+{% block content %}
+<div class="card fade-in delay-1" style="text-align: center; margin-bottom: 40px; border-top: 4px solid var(--primary-solid);">
+    <h2>Clustering Algorithms & Density Analysis</h2>
+    <p class="lead-text" style="max-width: 800px; margin: 0 auto; margin-bottom: 30px;">
+        Explore how unsupervised learning algorithms naturally group student profiles based on their academic and skill features. We compare distance-based, hierarchical, and density-based clustering techniques.
+    </p>
+</div>
+
+<!-- K-Means & Hierarchical Clustering -->
+<div class="card fade-in delay-2" style="margin-bottom: 40px;">
+    <h2><i class="fa-solid fa-layer-group" style="color: #6366f1; margin-right: 12px;"></i> K-Means & Hierarchical Clustering (Topics 21 & 24)</h2>
+    <p class="lead-text" style="margin-bottom: 20px;">
+        These traditional clustering methods force every point into a cluster. K-Means uses an "elbow method" to find the optimal number of groups, while Hierarchical clustering builds a tree-like dendrogram to show how points group together.
+    </p>
+    
+    <div class="grid-2" style="gap: 30px; margin-bottom: 30px;">
+        {% for plot in kmeans_plots %}
+        <div>
+            <h4 style="text-align: center; color: var(--text-secondary);">{{ plot.replace('.png', '').replace('_', ' ').title() }}</h4>
+            <img src="{{ url_for('serve_plot', filename=plot) }}" class="plot-img" onerror="this.style.display='none'">
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="grid-1" style="gap: 30px; justify-items: center;">
+        {% for plot in hierarchical_plots %}
+        <div style="width: 100%;">
+            <h4 style="text-align: center; color: var(--text-secondary);">{{ plot.replace('.png', '').replace('_', ' ').title() }}</h4>
+            <img src="{{ url_for('serve_plot', filename=plot) }}" class="plot-img" onerror="this.style.display='none'">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- DBSCAN Clustering -->
+<div class="card fade-in delay-3" style="margin-bottom: 40px;">
+    <h2><i class="fa-solid fa-project-diagram" style="color: #10b981; margin-right: 12px;"></i> Density-Based Clustering (DBSCAN)</h2>
+    <p class="lead-text" style="margin-bottom: 20px;">
+        Unlike K-Means, DBSCAN does not force every point into a cluster. It identifies regions of high density and explicitly labels scattered points in sparse regions as "noise". It also determines the number of clusters automatically based on the 'eps' (radius) and 'min_samples' parameters.
+    </p>
+
+    <div class="grid-2" style="gap: 30px; margin-bottom: 30px;">
+        {% for plot in dbscan_plots %}
+        <div>
+            <h4 style="text-align: center; color: var(--text-secondary);">{{ plot.replace('.png', '').replace('_', ' ').title() }}</h4>
+            <img src="{{ url_for('serve_dbscan_plot', filename=plot) }}" class="plot-img" onerror="this.style.display='none'">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- DBSCAN Report -->
+<div class="card fade-in delay-3">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+        <h2 style="margin: 0;"><i class="fa-solid fa-terminal" style="color: #334155; margin-right: 12px;"></i> DBSCAN Analysis Report</h2>
+    </div>
+    <p class="lead-text">Detailed summary of the density-based clustering experiment and its correlation with dataset anomalies.</p>
+    
+    <div style="background: #0f172a; border-radius: var(--radius-md); border: 1px solid var(--card-border); overflow: hidden; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5); margin-top: 20px;">
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 12px 15px; border-bottom: 1px solid var(--card-border); display: flex; align-items: center; gap: 8px;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #f59e0b;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></div>
+            <span style="margin-left: 10px; color: #94a3b8; font-size: 13px; font-family: monospace; letter-spacing: 0.5px;">~/pipeline/output/DBSCAN/dbscan_report.txt</span>
+        </div>
+        <pre class="terminal-report" style="margin: 0; border: none; border-radius: 0; box-shadow: none; background: transparent;">{{ dbscan_report }}</pre>
+    </div>
+</div>
+{% endblock %}
